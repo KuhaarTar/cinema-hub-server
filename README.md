@@ -1,135 +1,162 @@
-# Online Cinema - Backend System
+# Online Cinema - Full Stack Application
 
-Веб-додаток для перегляду фільмів і серіалів онлайн з можливістю підписки.
+A web application for streaming movies and TV series online with subscription functionality.
 
-## Технології
+## Technologies
 
+### Backend
 - **Java 17**
 - **Spring Boot 3.2.0**
 - **Spring Data JPA**
 - **Spring Security** (JWT authentication)
-- **H2 Database** (для розробки) / PostgreSQL (для продакшн)
+- **H2 Database** (for development) / PostgreSQL (for production)
 - **Maven**
 - **Lombok**
-- **MapStruct** (для маппінгу DTO)
 - **SpringDoc OpenAPI** (Swagger)
+
+## Project Structure
 
 ```
 src/main/java/com/onlinecinema/
-├── config/              # Конфігурація (Security, OpenAPI)
-├── controller/          # REST контролери
+├── config/              # Configuration (Security, OpenAPI)
+├── controller/          # REST controllers
 ├── dto/                 # Data Transfer Objects
-├── entity/              # JPA сутності
-├── exception/           # Обробка винятків
-├── pattern/             # Реалізація патернів проектування
+├── entity/              # JPA entities
+├── exception/           # Exception handling
+├── pattern/             # Design patterns implementation
 │   ├── factory/
 │   ├── observer/
 │   └── strategy/
-├── repository/          # Spring Data JPA репозиторії
-├── security/            # JWT та Security конфігурація
-└── service/             # Бізнес-логіка
-```
+├── repository/          # Spring Data JPA repositories
+├── security/            # JWT and Security configuration
+└── service/             # Business logic
 
-## Основні Функції
+## Features
 
-### Для Користувачів:
-- Реєстрація та автентифікація (JWT)
-- Перегляд каталогу фільмів та серіалів
-- Пошук та фільтрація (за жанром, роком, країною)
-- Підписки (FREE з рекламою / PREMIUM без реклами)
-- Додавання до "Вибране"
-- Рекомендації на основі історії переглядів
-- Історія переглядів
+### For Users:
+- User registration and authentication (JWT)
+- Browse movie and series catalog
+- Search and filter (by genre, year, country)
+- Subscriptions (FREE with ads / PREMIUM without ads)
+- Add to favorites
+- Recommendations based on viewing history
+- Viewing history
 
-### Для Адміністраторів:
-- CRUD операції для фільмів та серіалів
-- Управління жанрами
-- Управління користувачами
-- Генерація звітів:
-  - Найпопулярніші фільми/жанри
-  - Активність користувачів
-  - Доходи від підписок
+### For Administrators:
+- CRUD operations for movies and series
+- Genre management
+- User management
+- Report generation:
+  - Most popular movies/genres
+  - User activity
+  - Subscription revenue
 
 ## API Endpoints
 
-### Публічні:
-- `POST /api/auth/register` - реєстрація
-- `POST /api/auth/login` - вхід
-- `GET /api/movies` - список фільмів
-- `GET /api/series` - список серіалів
-- `GET /api/genres` - список жанрів
+### Public:
+- `POST /api/auth/register` - registration
+- `POST /api/auth/login` - login
+- `GET /api/movies` - list movies
+- `GET /api/series` - list series
+- `GET /api/genres` - list genres
 
-### Для авторизованих користувачів:
-- `GET /api/subscriptions/me` - моя підписка
-- `POST /api/subscriptions/upgrade` - оновити до преміум
-- `GET /api/favorites` - мої обрані
-- `GET /api/recommendations/movies` - рекомендації фільмів
-- `GET /api/recommendations/series` - рекомендації серіалів
+### For authenticated users:
+- `GET /api/subscriptions/me` - my subscription
+- `POST /api/subscriptions/upgrade` - upgrade to premium
+- `GET /api/favorites` - my favorites
+- `GET /api/recommendations/movies` - movie recommendations
+- `GET /api/recommendations/series` - series recommendations
 
-### Для адміністраторів:
-- `POST /api/admin/movies` - створити фільм
-- `PUT /api/admin/movies/{id}` - оновити фільм
-- `DELETE /api/admin/movies/{id}` - видалити фільм
-- `GET /api/reports` - звіти
+### For administrators:
+- `POST /api/admin/movies` - create movie
+- `PUT /api/admin/movies/{id}` - update movie
+- `DELETE /api/admin/movies/{id}` - delete movie
+- `GET /api/reports` - reports
 
-Повна документація API доступна за адресою: `http://localhost:8080/swagger-ui.html`
+Complete API documentation available at: `http://localhost:8080/swagger-ui.html`
 
-## Запуск Проекту
+## Getting Started
 
-### Швидкий Старт
+### Prerequisites
 
-1. **Вимоги**: Java 17+, Maven 3.6+
+- **Java 17+**
+- **Maven 3.6+**
+- **Node.js 18+** (for frontend)
+- **npm** or **pnpm** (for frontend)
 
-2. **Запуск додатку**:
+### Backend Setup
+
+1. **Run the application**:
 ```bash
 mvn spring-boot:run
 ```
 
-3. **Доступ до додатку**:
+2. **Access the application**:
    - API: http://localhost:8080
    - Swagger UI: http://localhost:8080/swagger-ui.html
    - H2 Console: http://localhost:8080/h2-console
      - JDBC URL: `jdbc:h2:mem:cinemadb`
      - Username: `sa`
-     - Password: (порожнє)
+     - Password: (empty)
 
-### Тестові Користувачі
+### Frontend Setup
 
-Після запуску автоматично створюються:
+1. **Navigate to frontend directory**:
+```bash
+cd frontend
+```
 
-- **Адміністратор**: `admin` / `admin123` (PREMIUM)
-- **Користувач 1**: `user1` / `user123` (PREMIUM)
-- **Користувач 2**: `user2` / `user123` (FREE)
+2. **Install dependencies**:
+```bash
+npm install
+# or
+pnpm install
+```
 
-### Тестові Дані
+3. **Run the development server**:
+```bash
+npm run dev
+# or
+pnpm dev
+```
 
-Автоматично створюються:
-- **9 жанрів** (Action, Drama, Comedy, Thriller, Sci-Fi, Horror, Romance, Crime, Fantasy)
-- **8 фільмів** (The Matrix, Inception, The Shawshank Redemption, The Dark Knight, Pulp Fiction, Forrest Gump, The Godfather, Interstellar)
-- **2 серіали** (Breaking Bad, Game of Thrones) з епізодами
+4. **Access the frontend**:
+   - Application: http://localhost:3000
 
-Детальні інструкції див. [QUICK_START.md](QUICK_START.md)
+### Test Users
 
-## База Даних
+After startup, the following users are automatically created:
 
-### Основні Сутності:
-- **User** - користувачі системи
-- **Movie** - фільми
-- **Series** - серіали
-- **Episode** - епізоди серіалів
-- **Genre** - жанри
-- **Subscription** - підписки користувачів
-- **ViewingHistory** - історія переглядів
-- **Favorite** - обрані фільми/серіали
+- **Administrator**: `admin` / `admin123` (PREMIUM)
+- **User**: `user` / `user123` (FREE)
 
-## Конфігурація
+### Test Data
 
-Файли конфігурації:
-- `application.properties` - основна конфігурація
-- `application-dev.properties` - для розробки
-- `application-prod.properties` - для продакшн
+Automatically created on startup:
+- **9 genres** (Action, Drama, Comedy, Thriller, Sci-Fi, Horror, Romance, Crime, Fantasy)
+- **8 movies** (The Matrix, Inception, The Shawshank Redemption, The Dark Knight, Pulp Fiction, Forrest Gump, The Godfather, Interstellar)
+- **2 series** (Breaking Bad, Game of Thrones) with episodes
 
-## Тестування
+## Database
+
+### Main Entities:
+- **User** - system users
+- **Movie** - movies
+- **Series** - TV series
+- **Episode** - series episodes
+- **Genre** - genres
+- **Subscription** - user subscriptions
+- **ViewingHistory** - viewing history
+- **Favorite** - favorite movies/series
+
+## Configuration
+
+Configuration files:
+- `application.properties` - main configuration
+- `application-dev.properties` - for development
+- `application-prod.properties` - for production
+
+## Testing
 
 ```bash
 mvn test
